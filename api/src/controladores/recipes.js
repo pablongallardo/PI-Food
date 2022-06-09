@@ -1,31 +1,35 @@
-const db = require("../db");
 const axios = require("axios");
+const e = require("express");
+const db = require("../db");
 const { Recipe, Diet } = require("../db");
-const { API_KEY, API_KEY_2 } = process.env;
+const { API_KEY, API_KEY_2, API_KEY3 } = process.env;
 
-const API_ROUTES = `https://api.spoonacular.com/recipes/complexSearchapiKey=${API_KEY}&addRecipeInformation=true`;
+// const API_ROUTES = {
+//   TOTAL_API: `https://api.spoonacular.com/recipes/complexSearch?apiKey=83f99238b4d74719b4c043f031aaf582&addRecipeInformation=true`,
+// };
 
 // ME TRAIGO LA INFO DESDE API
 
 const getApiInfo = async () => {
-//   const urlApi = await axios.get(
-// `https://api.spoonacular.com/recipes/complexSearchapiKey=${API_KEY}&addRecipeInformation=true`)
-    // 'https://api.spoonacular.com/recipes/complexSearch?apiKey=3a62965b699f42f2927b65cd35a1f49b&addRecipeInformation=true' );
-  const apiInfo = await API_ROUTES.data.results.map((e) => {
+     const urlApi = await axios.get(
+  // `https://api.spoonacular.com/recipes/complexSearchapiKey=${API_KEY}&addRecipeInformation=true`)
+ ` https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true `);
+  const apiInfo = await urlApi.data.results.map(e => {
     return {
       id: e.id,
-      name: e.title,
       image: e.image,
-      summary: e.summary,
+      name: e.title,
       dietTypes: e.diets,
+      summary: e.summary,
       score: e.spoonacularScore,
+      healthScore: e.healthScore,
       dishTypes: e.dishTypes,
-      steps: e.analizedInstructions[0]?.steps.map((e) => {
+      steps: e.analyzedInstructions[0]?.steps.map((e) => {
         return {
           number: e.number,
           step: e.step,
         };
-      }),
+      })
     };
   });
   return apiInfo;
@@ -49,7 +53,7 @@ const getInfoDB = async () => {
 
 const getApiByID = async (id) => {
   return await axios.get(
-    `https://api.spoonacular.com/recipes/${id}/information?3a62965b699f42f2927b65cd35a1f49b`
+    `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY3}`
   );
 };
 
@@ -70,17 +74,17 @@ const getDbId = async (id) => {
 // ME TRAIGO TOOOOODA LA INFORMACION
 
 const getAllRecipes = async () => {
-    const apiInfo = await getApiInfo()
-    const dbInfo = await getInfoDB();
-    const totalInfo = apiInfo.concat(dbInfo);
+  const apiInfo = await getApiInfo();
+  const dbInfo = await getInfoDB();
+  const totalInfo = apiInfo.concat(dbInfo);
 
-    return totalInfo;
-}
+  return totalInfo;
+};
 
 module.exports = {
-    getApiInfo, 
-    getInfoDB, 
-    getAllRecipes,
-    getApiByID,
-    getDbId
-}
+  getApiInfo,
+  getInfoDB,
+  getAllRecipes,
+  getApiByID,
+  getDbId,
+};
