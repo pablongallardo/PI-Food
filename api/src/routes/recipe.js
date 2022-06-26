@@ -1,13 +1,20 @@
-const { Router } = require('express');
+const express = require('express');
+require('dotenv').config();
+
 const { Recipe, Diet } = require('../db')
 
 
+const router = express.Router()
 
-const router = Router();
+
+
+router.use(express.json())
+
 
 router.post('/', async (req, res, next) => {
+    const { name, summary, score, healthScore, steps, dietTypes } = req.body
+
     try {
-        const { name, summary, score, healthScore, steps, dietTypes } = req.body
         const newRecipe = await Recipe.create({
             name,
             summary,
@@ -16,13 +23,14 @@ router.post('/', async (req, res, next) => {
             steps,
         })
 
-        let dietTypesRecipeDb = await Diet.findAll({
+        let dietDB = await Diet.findAll({
             where: {name: dietTypes}
         })
-        newRecipe.addDiet(dietTypesRecipeDb)
+        newRecipe.addDiet(dietDB)
         res.status(200).send(newRecipe)  
+        // res.send('successfull')
     } catch (error) {
-        next('No se recibieron los parámetros necesarios para crear la receta')
+        res.json({error:'No se recibieron los parámetros necesarios para crear la receta'})
     };
 });
 

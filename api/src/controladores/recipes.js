@@ -13,7 +13,7 @@ const { API_KEY, API_KEY_2, API_KEY3 } = process.env;
 const getApiInfo = async () => {
      const urlApi = await axios.get(
   // `https://api.spoonacular.com/recipes/complexSearchapiKey=${API_KEY}&addRecipeInformation=true`)
- ` https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true `);
+ ` https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true `);
   const apiInfo = await urlApi.data.results.map(e => {
     return {
       id: e.id,
@@ -53,7 +53,7 @@ const getInfoDB = async () => {
 
 const getApiByID = async (id) => {
   return await axios.get(
-    `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY3}`
+    `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY_2}`
   );
 };
 
