@@ -51,7 +51,7 @@ export function addRecipe(payload) {
 
         try {
             console.log(payload);
-            var response = await axios.get(`http://localhost:3001/recipe`, payload);
+            var response = await axios.post(`http://localhost:3001/recipe`, payload);
             console.log(payload)
             return response;
             

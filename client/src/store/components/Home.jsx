@@ -11,7 +11,6 @@ import {
 import Paged from "./Paged";
 import {Recipe} from "./Recipe";
 import SearchBar from "./SearchBar";
-import AddRecipe from './AddRecipe';
 import './home.css'
 
 let prevId = 1;

@@ -7,14 +7,26 @@
 }
 
 .pages {
+    color: rgb(231,218,218);
+    /* background-color: #ce5249; */
+    font-size: 17px;
+    text-align:center;
+    padding: 0px 20px 4px;
+    margin: 5px;
+    border-radius: 7px;
+    /* box-shadow: 3px 3px 5px 1px grey; */
+    cursor:pointer;
     display:flex;
     height: 30px;
     list-style-type: none;
     justify-content:center;
+/*
+    list-style-type: none;
+    justify-content:center;
     box-shadow: 3px 5px 1px grey;
     padding: 0px 20px 4px;
-    border-radius: 7px;
-    background-color: #ce5249;
+    border-radius: 7px; */
+    /* background-color: #ce5249; */
 }
 
 .pages a:hover {
